@@ -1,0 +1,18 @@
+# Demo-Cyverse-AG AG
+#
+# VERSION	1.0
+
+FROM	demo-cyverse-ag-syndicate
+MAINTAINER	Illyoung Choi <iychoi@email.arizona.edu>
+
+##############################################
+# Arguments
+##############################################
+ARG user=iychoi@email.arizona.edu
+ARG volume=test-volume
+ARG gateway=AG-test
+ARG debuglevel=3
+
+USER $USER
+
+CMD syndicate-ag -u $user -v $volume -g $gateway -d$debuglevel

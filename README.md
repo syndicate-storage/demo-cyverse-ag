@@ -1,2 +1,2 @@
 # demo-cyverse-ag
-Syndicate AGs for cyverse datasets
+Syndicate AGs for CyVerse datasets

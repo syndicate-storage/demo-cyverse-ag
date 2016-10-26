@@ -1,0 +1,19 @@
+# docker-compose.yml for demo-cyverse-ag
+
+version: '2'
+
+services:
+  ag01:
+    build:
+      context: .
+      dockerfile: Dockerfile.ag
+      args:
+        user: iychoi@email.arizona.edu
+        volume: test-volume
+        gateway: AG-test
+        debuglevel: 3
+    ports:
+      - "31111:31111"
+    image: demo-cyverse-ag
+    volumes:
+      - ../privates:/home/syndicate/.syndicate
