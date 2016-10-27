@@ -1,0 +1,13 @@
+# docker-compose.yml for demo-cyverse-ag
+
+version: '2'
+
+services:
+  ag_base:
+    image: demo-cyverse-ag
+    build:
+      context: .
+      dockerfile: Dockerfile.syndicate
+    volumes:
+      - ../privates/default:/home/syndicate/.syndicate
+      - ../drivers/default:/home/syndicate/driver

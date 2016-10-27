@@ -4,16 +4,12 @@ version: '2'
 
 services:
   ag01:
-    build:
-      context: .
-      dockerfile: Dockerfile.ag
-      args:
-        user: iychoi@email.arizona.edu
-        volume: test-volume
-        gateway: AG-test
-        debuglevel: 3
+    extends:
+      file: docker-compose-base.yml
+      service: ag_base
+    entrypoint: start_gateway.sh AG01 iychoi@email.arizona.edu test-volume
     ports:
       - "31111:31111"
-    image: demo-cyverse-ag
     volumes:
-      - ../privates:/home/syndicate/.syndicate
+      - ../privates/ag01:/home/syndicate/.syndicate
+      - ../drivers/ag01:/home/syndicate/driver
