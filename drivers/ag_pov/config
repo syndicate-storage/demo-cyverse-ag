@@ -1,5 +1,5 @@
 {
-   "DATASET_DIR":       "/iplant/home/iychoi/dataset",
+   "DATASET_DIR":       "/iplant/home/share/datasets/POV",
    "EXEC_FMT":          "/usr/bin/env python -m syndicate.ag.gateway",
    "DRIVER":            "syndicate.ag.drivers.fs",
    "DRIVER_FS_PLUGIN": "irods",
@@ -7,7 +7,7 @@
       {
          "irods":
             {
-               "host":  "",
+               "host":  "localhost",
                "port":  1247,
                "zone":  "iplant"
             }

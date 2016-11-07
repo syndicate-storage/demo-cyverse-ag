@@ -3,13 +3,13 @@
 version: '2'
 
 services:
-  ag01:
+  ag_pov:
     extends:
       file: docker-compose-base.yml
       service: ag_base
-    entrypoint: start_gateway.sh AG01 iychoi@email.arizona.edu test-volume
+    entrypoint: start_gateway.sh ag_pov cyverse@cyverse.org pov
     ports:
       - "31111:31111"
     volumes:
-      - ../privates/ag01:/home/syndicate/.syndicate
-      - ../drivers/ag01:/home/syndicate/driver
+      - ../privates/ag_pov:/home/syndicate/syndicate_in
+      - ../drivers/ag_pov:/home/syndicate/driver_in
