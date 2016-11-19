@@ -3,8 +3,11 @@ GATEWAY="$1"
 USER="$2"
 VOLUME="$3"
 MS_HOST="$4"
-MS_PORT=$5
-GATEWAY_PORT=$6
+GATEWAY_HOST="$5"
+
+GATEWAY_HOST_ARR=(`echo ${GATEWAY_HOST} | tr ':' ' '`)
+GATEWAY_HOSTNAME=${GATEWAY_HOST_ARR[0]}
+GATEWAY_HOSTPORT=${GATEWAY_HOST_ARR[1]}
 
 PRIVATE_MOUNT_DIR=/opt/private
 DRIVER_MOUNT_DIR=/opt/driver
@@ -19,7 +22,7 @@ sudo cp ${PRIVATE_MOUNT_DIR}/${USER}.pkey ${TEMP_CERT_DIR}/
 sudo chown -R syndicate:syndicate ${TEMP_CERT_DIR}
 sudo chmod -R 744 ${TEMP_CERT_DIR}
 
-syndicate -d --trust_public_key setup ${USER} ${TEMP_CERT_DIR}/${USER}.pkey http://${MS_HOST}:${MS_PORT}
+syndicate -d --trust_public_key setup ${USER} ${TEMP_CERT_DIR}/${USER}.pkey http://${MS_HOST}
 syndicate -d reload_user_cert ${USER}
 rm -rf ${TEMP_CERT_DIR}
 echo "Registering Syndicate... Done!"
@@ -58,7 +61,7 @@ if [ $? -eq 0 ]
 then
     echo "Gateawy ${GATEWAY} already exists... Skip"
 else
-    echo "y" | syndicate -d create_gateway email=${USER} volume=${VOLUME} name=${GATEWAY} private_key=auto type=AG caps=ALL port=${GATEWAY_PORT} host=${MS_HOST}
+    echo "y" | syndicate -d create_gateway email=${USER} volume=${VOLUME} name=${GATEWAY} private_key=auto type=AG caps=ALL host=${GATEWAY_HOSTNAME} port=${GATEWAY_HOSTPORT}
 fi
 
 syndicate -d reload_gateway_cert ${GATEWAY}
