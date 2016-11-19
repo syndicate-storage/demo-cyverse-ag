@@ -11,7 +11,7 @@ build: build_base
 	$(DOCKER_COMPOSE) build
 
 up: build
-	-$(DOCKER_COMPOSE) up
+	-$(DOCKER_COMPOSE) up -d
 
 clean:
 	-$(DOCKER_COMPOSE) stop
