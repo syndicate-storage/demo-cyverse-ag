@@ -58,7 +58,7 @@ if [ $? -eq 0 ]
 then
     echo "Gateawy ${GATEWAY} already exists... Skip"
 else
-    echo "y" | syndicate -d create_gateway email=${USER} volume=${VOLUME} name=${GATEWAY} private_key=auto type=AG caps=ALL port=${GATEWAY}_PORT host=${MS_HOST}
+    echo "y" | syndicate -d create_gateway email=${USER} volume=${VOLUME} name=${GATEWAY} private_key=auto type=AG caps=ALL port=${GATEWAY_PORT} host=${MS_HOST}
 fi
 
 syndicate -d reload_gateway_cert ${GATEWAY}
