@@ -8,6 +8,3 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.syndicate
-    volumes:
-      - ../privates/default:/home/syndicate/syndicate_in
-      - ../drivers/default:/home/syndicate/driver_in

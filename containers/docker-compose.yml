@@ -7,9 +7,9 @@ services:
     extends:
       file: docker-compose-base.yml
       service: ag_base
-    entrypoint: start_gateway.sh ag_pov cyverse@cyverse.org pov
+    entrypoint: start_gateway.sh ag_pov cyverse@cyverse.org pov demo1.opencloud.cs.arizona.edu 28080 31111
     ports:
       - "31111:31111"
     volumes:
-      - ../privates/ag_pov:/home/syndicate/syndicate_in
-      - ../drivers/ag_pov:/home/syndicate/driver_in
+      - ../ag_pov/private:/opt/private:rw
+      - ../ag_pov/driver:/opt/driver:rw

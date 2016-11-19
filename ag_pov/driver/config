@@ -7,7 +7,7 @@
       {
          "irods":
             {
-               "host":  "localhost",
+               "host":  "demo2.opencloud.cs.arizona.edu",
                "port":  1247,
                "zone":  "iplant"
             }
