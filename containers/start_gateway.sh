@@ -30,7 +30,7 @@ echo "Registering Syndicate... Done!"
 
 # CREATE A VOLUME
 echo "Creating a Syndicate Volume..."
-syndicate read_volume ${VOLUME} 2&> /dev/null
+syndicate read_volume ${VOLUME} &> /dev/null
 if [ $? -eq 0 ]
 then
     echo "Volume ${VOLUME} already exists... Skip"
@@ -56,10 +56,10 @@ echo "Preparing driver code... Done!"
 
 # CREATE A GATEWAY
 echo "Creating an AG..."
-syndicate read_gateway ${GATEWAY} 2&> /dev/null
+syndicate read_gateway ${GATEWAY} &> /dev/null
 if [ $? -eq 0 ]
 then
-    echo "Gateawy ${GATEWAY} already exists... Skip"
+    echo "Gateway ${GATEWAY} already exists... Skip"
 else
     echo "y" | syndicate -d create_gateway email=${USER} volume=${VOLUME} name=${GATEWAY} private_key=auto type=AG caps=ALL host=${GATEWAY_HOSTNAME} port=${GATEWAY_HOSTPORT}
 fi
