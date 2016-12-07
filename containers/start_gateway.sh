@@ -1,13 +1,14 @@
 #! /bin/bash
-GATEWAY="$1"
+MS_HOST="$1"
 USER="$2"
 VOLUME="$3"
-MS_HOST="$4"
-GATEWAY_HOST="$5"
+AG_NAME="$4"
+AG_HOST="$5"
+UG_NAME="$6"
 
-GATEWAY_HOST_ARR=(`echo ${GATEWAY_HOST} | tr ':' ' '`)
-GATEWAY_HOSTNAME=${GATEWAY_HOST_ARR[0]}
-GATEWAY_HOSTPORT=${GATEWAY_HOST_ARR[1]}
+AG_HOST_ARR=(`echo ${AG_HOST} | tr ':' ' '`)
+AG_HOSTNAME=${AG_HOST_ARR[0]}
+AG_PORT=${AG_HOST_ARR[1]}
 
 PRIVATE_MOUNT_DIR=/opt/private
 DRIVER_MOUNT_DIR=/opt/driver
@@ -54,20 +55,31 @@ sudo chmod -R 744 ${DRIVER_DIR}
 echo "Preparing driver code... Done!"
 
 
-# CREATE A GATEWAY
-echo "Creating an AG..."
-syndicate read_gateway ${GATEWAY} &> /dev/null
+# CREATE AN USER GATEWAY FOR ANONYMOUS ACCESS
+echo "Creating an UG for anonymous access..."
+syndicate read_gateway ${UG_NAME} &> /dev/null
 if [ $? -eq 0 ]
 then
-    echo "Gateway ${GATEWAY} already exists... Skip"
+    echo "Gateway ${UG_NAME} already exists... Skip"
 else
-    echo "y" | syndicate -d create_gateway email=${USER} volume=${VOLUME} name=${GATEWAY} private_key=auto type=AG caps=ALL host=${GATEWAY_HOSTNAME} port=${GATEWAY_HOSTPORT}
+    echo "y" | syndicate -d create_gateway email=anonymous volume=${VOLUME} name=${UG_NAME} private_key=auto type=UG caps=GATEWAY_CAP_READ_DATA|GATEWAY_CAP_READ_METADATA host=localhost
+fi
+echo "Creating an UG for anonymous access... Done!"
+
+# CREATE AN ACQUISITION GATEWAY
+echo "Creating an AG..."
+syndicate read_gateway ${AG_NAME} &> /dev/null
+if [ $? -eq 0 ]
+then
+    echo "Gateway ${AG_NAME} already exists... Skip"
+else
+    echo "y" | syndicate -d create_gateway email=${USER} volume=${VOLUME} name=${AG_NAME} private_key=auto type=AG caps=ALL host=${AG_HOSTNAME} port=${AG_PORT}
 fi
 
-syndicate -d reload_gateway_cert ${GATEWAY}
-echo "y" | syndicate -d update_gateway ${GATEWAY} driver=${DRIVER_DIR}
+syndicate -d reload_gateway_cert ${AG_NAME}
+echo "y" | syndicate -d update_gateway ${AG_NAME} driver=${DRIVER_DIR}
 echo "Creating an AG... Done!"
 
 # RUN AG
 echo "Run AG..."
-syndicate-ag -u ${USER} -v ${VOLUME} -g ${GATEWAY} -d3
+syndicate-ag -u ${USER} -v ${VOLUME} -g ${AG_NAME} -d3
