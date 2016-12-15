@@ -1,4 +1,4 @@
 #! /bin/bash
 
 # create a user
-syndicate create_gateway email=anonymous volume=pov name=pov_reader private_key=auto type=UG caps=GATEWAY_CAP_READ_DATA|GATEWAY_CAP_READ_METADATA host=localhost port=31111
+syndicate create_gateway email=anonymous volume=pov name=pov_reader private_key=auto type=UG caps=READONLY host=localhost port=31111
