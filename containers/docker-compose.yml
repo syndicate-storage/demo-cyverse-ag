@@ -13,3 +13,4 @@ services:
     volumes:
       - ../ag_pov/private:/opt/private:rw
       - ../ag_pov/driver:/opt/driver:rw
+      - ../ag_pov/.syndicate/:/home/syndicate/.syndicate

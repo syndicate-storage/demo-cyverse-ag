@@ -14,6 +14,10 @@ PRIVATE_MOUNT_DIR=/opt/private
 DRIVER_MOUNT_DIR=/opt/driver
 TEMP_CERT_DIR=/home/syndicate/syndicate_cert
 DRIVER_DIR=/home/syndicate/ag_driver
+SYNDICATE_CONF_DIR=/home/syndicate/.syndicate
+
+sudo chown -R syndicate:syndicate ${SYNDICATE_CONF_DIR}
+sudo chmod -R 744 ${SYNDICATE_CONF_DIR}
 
 # REGISTER SYNDICATE
 echo "Registering Syndicate..."
