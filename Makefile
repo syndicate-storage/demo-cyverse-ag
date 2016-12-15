@@ -25,6 +25,10 @@ logs:
 	cd containers && \
 	docker-compose logs $(LOGS_ARGS)
 
+dump_logs:
+	cd containers && \
+	docker-compose logs --no-color -t $(LOGS_ARGS)
+
 clean:
 	-$(DOCKER_COMPOSE) stop
 	-$(DOCKER_COMPOSE) rm --force --all
