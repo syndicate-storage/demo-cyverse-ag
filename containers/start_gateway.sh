@@ -66,7 +66,7 @@ if [ $? -eq 0 ]
 then
     echo "Gateway ${UG_NAME} already exists... Skip"
 else
-    echo "y" | syndicate -d create_gateway email=NOBODY volume=${VOLUME} name=${UG_NAME} private_key=auto type=UG caps=READONLY host=localhost
+    echo "y" | syndicate -d create_gateway email=ANONYMOUS volume=${VOLUME} name=${UG_NAME} private_key=auto type=UG caps=READONLY host=localhost
 fi
 echo "Creating an UG for anonymous access... Done!"
 
