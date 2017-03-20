@@ -23,11 +23,11 @@ sudo chmod -R 744 ${SYNDICATE_CONF_DIR}
 echo "Registering Syndicate..."
 sudo rm -rf ${TEMP_CERT_DIR}
 mkdir ${TEMP_CERT_DIR}
-sudo cp ${PRIVATE_MOUNT_DIR}/${USER}.pkey ${TEMP_CERT_DIR}/
+sudo cp ${PRIVATE_MOUNT_DIR}/${USER} ${TEMP_CERT_DIR}/
 sudo chown -R syndicate:syndicate ${TEMP_CERT_DIR}
 sudo chmod -R 744 ${TEMP_CERT_DIR}
 
-syndicate -d --trust_public_key setup ${USER} ${TEMP_CERT_DIR}/${USER}.pkey http://${MS_HOST}
+syndicate -d --trust_public_key setup ${USER} ${TEMP_CERT_DIR}/${USER} http://${MS_HOST}
 syndicate -d reload_user_cert ${USER}
 rm -rf ${TEMP_CERT_DIR}
 echo "Registering Syndicate... Done!"
