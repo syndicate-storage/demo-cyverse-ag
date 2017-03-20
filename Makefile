@@ -1,13 +1,5 @@
 DOCKER_COMPOSE ?= docker-compose -f containers/docker-compose.yml
 
-# If the first argument is "logs"...
-ifeq (logs,$(firstword $(MAKECMDGOALS)))
-  # use the rest as arguments for "logs"
-  LOGS_ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
-  # ...and turn them into do-nothing targets
-  $(eval $(LOGS_ARGS):;@:)
-endif
-
 .PHONY: all build clean up logs
 
 all: up
@@ -22,12 +14,13 @@ up: build
 	-$(DOCKER_COMPOSE) up -d
 
 logs:
-	cd containers && \
-	docker-compose logs $(LOGS_ARGS)
+	$(DOCKER_COMPOSE) logs $(LOGS_ARGS) $(CONTAINER)
 
 dump_logs:
-	cd containers && \
-	docker-compose logs --no-color -t $(LOGS_ARGS)
+	$(DOCKER_COMPOSE) logs --no-color -t $(LOGS_ARGS) $(CONTAINER)
+
+logs_tail:
+	$(DOCKER_COMPOSE) logs --tail=20 $(LOGS_ARGS) $(CONTAINER)
 
 clean:
 	-$(DOCKER_COMPOSE) stop
