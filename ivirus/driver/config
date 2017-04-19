@@ -1,5 +1,5 @@
 {
-   "DATASET_DIR":       "/iplant/home/share/datasets/POV",
+   "DATASET_DIR":       "/iplant/home/shared/iVirus",
    "EXEC_FMT":          "/usr/bin/env python -m syndicate.ag.gateway",
    "DRIVER":            "syndicate.ag.drivers.fs",
    "DRIVER_FS_PLUGIN": "irods",
@@ -7,7 +7,7 @@
       {
          "irods":
             {
-               "host":  "demo2.opencloud.cs.arizona.edu",
+               "host":  "data.cyverse.org",
                "port":  1247,
                "zone":  "iplant"
             }
