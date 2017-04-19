@@ -14,13 +14,10 @@ up: build
 	-$(DOCKER_COMPOSE) up -d
 
 logs:
-	$(DOCKER_COMPOSE) logs $(LOGS_ARGS) $(CONTAINER)
-
-dump_logs:
-	$(DOCKER_COMPOSE) logs --no-color -t $(LOGS_ARGS) $(CONTAINER)
+	$(DOCKER_COMPOSE) logs
 
 logs_tail:
-	$(DOCKER_COMPOSE) logs --tail=20 $(LOGS_ARGS) $(CONTAINER)
+	$(DOCKER_COMPOSE) logs --tail=20
 
 clean:
 	-$(DOCKER_COMPOSE) stop
