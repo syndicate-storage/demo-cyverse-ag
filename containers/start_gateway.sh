@@ -12,24 +12,12 @@ AG_PORT=${AG_HOST_ARR[1]}
 
 PRIVATE_MOUNT_DIR=/opt/private
 DRIVER_MOUNT_DIR=/opt/driver
-TEMP_CERT_DIR=/home/syndicate/syndicate_cert
 DRIVER_DIR=/home/syndicate/ag_driver
-SYNDICATE_CONF_DIR=/home/syndicate/.syndicate
-
-sudo chown -R syndicate:syndicate ${SYNDICATE_CONF_DIR}
-sudo chmod -R 744 ${SYNDICATE_CONF_DIR}
 
 # REGISTER SYNDICATE
 echo "Registering Syndicate..."
-sudo rm -rf ${TEMP_CERT_DIR}
-mkdir ${TEMP_CERT_DIR}
-sudo cp ${PRIVATE_MOUNT_DIR}/${USER} ${TEMP_CERT_DIR}/
-sudo chown -R syndicate:syndicate ${TEMP_CERT_DIR}
-sudo chmod -R 744 ${TEMP_CERT_DIR}
-
-syndicate -d --trust_public_key setup ${USER} ${TEMP_CERT_DIR}/${USER} http://${MS_HOST}
+syndicate -d --trust_public_key setup ${USER} ${PRIVATE_MOUNT_DIR}/${USER} http://${MS_HOST}
 syndicate -d reload_user_cert ${USER}
-rm -rf ${TEMP_CERT_DIR}
 echo "Registering Syndicate... Done!"
 
 
