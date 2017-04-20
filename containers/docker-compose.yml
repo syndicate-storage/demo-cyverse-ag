@@ -7,7 +7,7 @@ services:
     extends:
       file: docker-compose-base.yml
       service: ag_base
-    entrypoint: start_gateway.sh demo1.opencloud.cs.arizona.edu:28080 cyverse@cyverse.org pov ag_pov demo2.opencloud.cs.arizona.edu:31514 pov_anonymous
+    entrypoint: start_gateway.sh demo1.opencloud.cs.arizona.edu:28080 cyverse@opencloud.us pov ag_pov demo2.opencloud.cs.arizona.edu:31514 pov_anonymous
     ports:
       - "31514:31514"
     volumes:
@@ -18,7 +18,7 @@ services:
     extends:
       file: docker-compose-base.yml
       service: ag_base
-    entrypoint: start_gateway.sh demo1.opencloud.cs.arizona.edu:28080 cyverse@cyverse.org imicrobe ag_imicrobe demo2.opencloud.cs.arizona.edu:31511 imicrobe_anonymous
+    entrypoint: start_gateway.sh demo1.opencloud.cs.arizona.edu:28080 cyverse@opencloud.us imicrobe ag_imicrobe demo2.opencloud.cs.arizona.edu:31511 imicrobe_anonymous
     ports:
       - "31511:31511"
     volumes:
@@ -29,7 +29,7 @@ services:
     extends:
       file: docker-compose-base.yml
       service: ag_base
-    entrypoint: start_gateway.sh demo1.opencloud.cs.arizona.edu:28080 cyverse@cyverse.org ivirus ag_ivirus demo2.opencloud.cs.arizona.edu:31512 ivirus_anonymous
+    entrypoint: start_gateway.sh demo1.opencloud.cs.arizona.edu:28080 cyverse@opencloud.us ivirus ag_ivirus demo2.opencloud.cs.arizona.edu:31512 ivirus_anonymous
     ports:
       - "31512:31512"
     volumes:
@@ -40,7 +40,7 @@ services:
     extends:
       file: docker-compose-base.yml
       service: ag_base
-    entrypoint: start_gateway.sh demo1.opencloud.cs.arizona.edu:28080 cyverse@cyverse.org shared ag_shared demo2.opencloud.cs.arizona.edu:31513 shared_anonymous
+    entrypoint: start_gateway.sh demo1.opencloud.cs.arizona.edu:28080 cyverse@opencloud.us shared ag_shared demo2.opencloud.cs.arizona.edu:31513 shared_anonymous
     ports:
       - "31513:31513"
     volumes:
