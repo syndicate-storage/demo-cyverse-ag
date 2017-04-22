@@ -4,10 +4,7 @@ DOCKER_COMPOSE ?= docker-compose -f containers/docker-compose.yml
 
 all: up
 
-build_base:
-	docker build -f containers/Dockerfile.base -t demo-cyverse-ag-base containers
-
-build: build_base
+build:
 	$(DOCKER_COMPOSE) build
 
 up: build
