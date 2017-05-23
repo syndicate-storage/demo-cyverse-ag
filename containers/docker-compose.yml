@@ -3,17 +3,6 @@
 version: '2'
 
 services:
-  pov:
-    extends:
-      file: docker-compose-base.yml
-      service: ag_base
-    entrypoint: start_gateway.sh demo1.opencloud.cs.arizona.edu:28080 cyverse@opencloud.us pov ag_pov demo2.opencloud.cs.arizona.edu:31514 pov_anonymous
-    ports:
-      - "31514:31514"
-    volumes:
-      - ../pov/private:/opt/private:rw
-      - ../pov/driver:/opt/driver:rw
-
   imicrobe:
     extends:
       file: docker-compose-base.yml
@@ -57,3 +46,14 @@ services:
     volumes:
       - ../panzea/private:/opt/private:rw
       - ../panzea/driver:/opt/driver:rw
+
+  pov:
+    extends:
+      file: docker-compose-base.yml
+      service: ag_base
+    entrypoint: start_gateway.sh demo1.opencloud.cs.arizona.edu:28080 cyverse@opencloud.us pov ag_pov demo2.opencloud.cs.arizona.edu:31515 pov_anonymous
+    ports:
+      - "31515:31515"
+    volumes:
+      - ../pov/private:/opt/private:rw
+      - ../pov/driver:/opt/driver:rw
