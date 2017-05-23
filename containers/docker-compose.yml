@@ -36,13 +36,24 @@ services:
       - ../ivirus/private:/opt/private:rw
       - ../ivirus/driver:/opt/driver:rw
 
-  shared:
+  digbio:
     extends:
       file: docker-compose-base.yml
       service: ag_base
-    entrypoint: start_gateway.sh demo1.opencloud.cs.arizona.edu:28080 cyverse@opencloud.us shared ag_shared demo2.opencloud.cs.arizona.edu:31513 shared_anonymous
+    entrypoint: start_gateway.sh demo1.opencloud.cs.arizona.edu:28080 cyverse@opencloud.us digbio ag_digbio demo2.opencloud.cs.arizona.edu:31513 digbio_anonymous
     ports:
       - "31513:31513"
     volumes:
-      - ../shared/private:/opt/private:rw
-      - ../shared/driver:/opt/driver:rw
+      - ../digbio/private:/opt/private:rw
+      - ../digbio/driver:/opt/driver:rw
+
+  panzea:
+    extends:
+      file: docker-compose-base.yml
+      service: ag_base
+    entrypoint: start_gateway.sh demo1.opencloud.cs.arizona.edu:28080 cyverse@opencloud.us panzea ag_panzea demo2.opencloud.cs.arizona.edu:31514 panzea_anonymous
+    ports:
+      - "31514:31514"
+    volumes:
+      - ../panzea/private:/opt/private:rw
+      - ../panzea/driver:/opt/driver:rw
