@@ -1,5 +1,5 @@
 {
-   "DATASET_DIR":       "/iplant/home/shared",
+   "DATASET_DIR":       "/iplant/home/shared/digbio",
    "EXEC_FMT":          "/usr/bin/env python -m syndicate.ag.gateway",
    "DRIVER":            "syndicate.ag.drivers.fs",
    "DRIVER_FS_PLUGIN": "irods",
