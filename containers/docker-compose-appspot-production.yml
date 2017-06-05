@@ -3,7 +3,7 @@
 version: '2'
 
 services:
-  appspot_demo_imicrobe:
+  appspot_production_imicrobe:
     extends:
       file: docker-compose-base.yml
       service: ag_base
