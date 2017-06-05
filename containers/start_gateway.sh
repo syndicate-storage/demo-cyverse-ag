@@ -16,7 +16,7 @@ DRIVER_DIR=/home/syndicate/ag_driver
 
 # REGISTER SYNDICATE
 echo "Registering Syndicate..."
-syndicate -d --trust_public_key setup ${USER} ${PRIVATE_MOUNT_DIR}/${USER} http://${MS_HOST}
+syndicate -d --trust_public_key setup ${USER} ${PRIVATE_MOUNT_DIR}/${USER} ${MS_HOST}
 syndicate -d reload_user_cert ${USER}
 echo "Registering Syndicate... Done!"
 
