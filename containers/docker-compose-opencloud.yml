@@ -1,0 +1,59 @@
+# docker-compose.yml for demo-cyverse-ag
+
+version: '2'
+
+services:
+  opencloud_demo_imicrobe:
+    extends:
+      file: docker-compose-base.yml
+      service: ag_base
+    entrypoint: start_gateway.sh demo1.opencloud.cs.arizona.edu:28080 cyverse@opencloud.us imicrobe ag_imicrobe demo2.opencloud.cs.arizona.edu:31511 imicrobe_anonymous
+    ports:
+      - "31511:31511"
+    volumes:
+      - ../imicrobe/private:/opt/private:rw
+      - ../imicrobe/driver:/opt/driver:rw
+
+  opencloud_demo_ivirus:
+    extends:
+      file: docker-compose-base.yml
+      service: ag_base
+    entrypoint: start_gateway.sh demo1.opencloud.cs.arizona.edu:28080 cyverse@opencloud.us ivirus ag_ivirus demo2.opencloud.cs.arizona.edu:31512 ivirus_anonymous
+    ports:
+      - "31512:31512"
+    volumes:
+      - ../ivirus/private:/opt/private:rw
+      - ../ivirus/driver:/opt/driver:rw
+
+  opencloud_demo_digbio:
+    extends:
+      file: docker-compose-base.yml
+      service: ag_base
+    entrypoint: start_gateway.sh demo1.opencloud.cs.arizona.edu:28080 cyverse@opencloud.us digbio ag_digbio demo2.opencloud.cs.arizona.edu:31513 digbio_anonymous
+    ports:
+      - "31513:31513"
+    volumes:
+      - ../digbio/private:/opt/private:rw
+      - ../digbio/driver:/opt/driver:rw
+
+  opencloud_demo_panzea:
+    extends:
+      file: docker-compose-base.yml
+      service: ag_base
+    entrypoint: start_gateway.sh demo1.opencloud.cs.arizona.edu:28080 cyverse@opencloud.us panzea ag_panzea demo2.opencloud.cs.arizona.edu:31514 panzea_anonymous
+    ports:
+      - "31514:31514"
+    volumes:
+      - ../panzea/private:/opt/private:rw
+      - ../panzea/driver:/opt/driver:rw
+
+  opencloud_demo_pov:
+    extends:
+      file: docker-compose-base.yml
+      service: ag_base
+    entrypoint: start_gateway.sh demo1.opencloud.cs.arizona.edu:28080 cyverse@opencloud.us pov ag_pov demo2.opencloud.cs.arizona.edu:31515 pov_anonymous
+    ports:
+      - "31515:31515"
+    volumes:
+      - ../pov/private:/opt/private:rw
+      - ../pov/driver:/opt/driver:rw

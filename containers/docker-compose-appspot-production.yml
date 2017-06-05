@@ -1,0 +1,15 @@
+# docker-compose.yml for demo-cyverse-ag
+
+version: '2'
+
+services:
+  appspot_demo_imicrobe:
+    extends:
+      file: docker-compose-base.yml
+      service: ag_base
+    entrypoint: start_gateway.sh syndicate-ms-demo.appspot.com:80 cyverse@opencloud.us imicrobe ag_imicrobe demo2.opencloud.cs.arizona.edu:31531 imicrobe_anonymous
+    ports:
+      - "31531:31531"
+    volumes:
+      - ../imicrobe/private:/opt/private:rw
+      - ../imicrobe/driver:/opt/driver:rw
