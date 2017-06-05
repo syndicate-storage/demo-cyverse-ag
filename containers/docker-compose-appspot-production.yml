@@ -7,9 +7,53 @@ services:
     extends:
       file: docker-compose-base.yml
       service: ag_base
-    entrypoint: start_gateway.sh syndicate-ms-demo.appspot.com:80 cyverse@opencloud.us imicrobe ag_imicrobe demo2.opencloud.cs.arizona.edu:31531 imicrobe_anonymous
+    entrypoint: start_gateway.sh syndicate-ms-datasets.appspot.com:80 cyverse@opencloud.us imicrobe ag_imicrobe demo2.opencloud.cs.arizona.edu:31531 imicrobe_anonymous
     ports:
       - "31531:31531"
     volumes:
       - ../imicrobe/private:/opt/private:rw
       - ../imicrobe/driver:/opt/driver:rw
+
+  appspot_production_ivirus:
+    extends:
+      file: docker-compose-base.yml
+      service: ag_base
+    entrypoint: start_gateway.sh syndicate-ms-datasets.appspot.com:80 cyverse@opencloud.us ivirus ag_ivirus demo2.opencloud.cs.arizona.edu:31532 ivirus_anonymous
+    ports:
+      - "31532:31532"
+    volumes:
+      - ../ivirus/private:/opt/private:rw
+      - ../ivirus/driver:/opt/driver:rw
+
+  appspot_production_digbio:
+    extends:
+      file: docker-compose-base.yml
+      service: ag_base
+    entrypoint: start_gateway.sh syndicate-ms-datasets.appspot.com:80 cyverse@opencloud.us digbio ag_digbio demo2.opencloud.cs.arizona.edu:31533 digbio_anonymous
+    ports:
+      - "31533:31533"
+    volumes:
+      - ../digbio/private:/opt/private:rw
+      - ../digbio/driver:/opt/driver:rw
+
+  appspot_production_panzea:
+    extends:
+      file: docker-compose-base.yml
+      service: ag_base
+    entrypoint: start_gateway.sh syndicate-ms-datasets.appspot.com:80 cyverse@opencloud.us panzea ag_panzea demo2.opencloud.cs.arizona.edu:31534 panzea_anonymous
+    ports:
+      - "31534:31534"
+    volumes:
+      - ../panzea/private:/opt/private:rw
+      - ../panzea/driver:/opt/driver:rw
+
+  appspot_production_pov:
+    extends:
+      file: docker-compose-base.yml
+      service: ag_base
+    entrypoint: start_gateway.sh syndicate-ms-datasets.appspot.com:80 cyverse@opencloud.us pov ag_pov demo2.opencloud.cs.arizona.edu:31535 pov_anonymous
+    ports:
+      - "31535:31535"
+    volumes:
+      - ../pov/private:/opt/private:rw
+      - ../pov/driver:/opt/driver:rw
