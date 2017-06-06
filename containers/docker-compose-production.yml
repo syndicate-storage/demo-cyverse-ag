@@ -7,7 +7,7 @@ services:
     extends:
       file: docker-compose-base.yml
       service: ag_base
-    entrypoint: start_gateway.sh https://syndicate-ms-datasets.appspot.com:80 cyverse@opencloud.us imicrobe ag_imicrobe demo2.opencloud.cs.arizona.edu:31521 imicrobe_anonymous
+    entrypoint: start_gateway.sh http://syndicate-ms-datasets.appspot.com:80 cyverse@opencloud.us imicrobe ag_imicrobe demo2.opencloud.cs.arizona.edu:31521 imicrobe_anonymous
     ports:
       - "31521:31521"
     volumes:
@@ -18,7 +18,7 @@ services:
     extends:
       file: docker-compose-base.yml
       service: ag_base
-    entrypoint: start_gateway.sh https://syndicate-ms-datasets.appspot.com:80 cyverse@opencloud.us ivirus ag_ivirus demo2.opencloud.cs.arizona.edu:31522 ivirus_anonymous
+    entrypoint: start_gateway.sh http://syndicate-ms-datasets.appspot.com:80 cyverse@opencloud.us ivirus ag_ivirus demo2.opencloud.cs.arizona.edu:31522 ivirus_anonymous
     ports:
       - "31522:31522"
     volumes:
@@ -29,7 +29,7 @@ services:
     extends:
       file: docker-compose-base.yml
       service: ag_base
-    entrypoint: start_gateway.sh https://syndicate-ms-datasets.appspot.com:80 cyverse@opencloud.us digbio ag_digbio demo2.opencloud.cs.arizona.edu:31523 digbio_anonymous
+    entrypoint: start_gateway.sh http://syndicate-ms-datasets.appspot.com:80 cyverse@opencloud.us digbio ag_digbio demo2.opencloud.cs.arizona.edu:31523 digbio_anonymous
     ports:
       - "31523:31523"
     volumes:
@@ -40,7 +40,7 @@ services:
     extends:
       file: docker-compose-base.yml
       service: ag_base
-    entrypoint: start_gateway.sh https://syndicate-ms-datasets.appspot.com:80 cyverse@opencloud.us panzea ag_panzea demo2.opencloud.cs.arizona.edu:31524 panzea_anonymous
+    entrypoint: start_gateway.sh http://syndicate-ms-datasets.appspot.com:80 cyverse@opencloud.us panzea ag_panzea demo2.opencloud.cs.arizona.edu:31524 panzea_anonymous
     ports:
       - "31524:31524"
     volumes:
@@ -51,7 +51,7 @@ services:
     extends:
       file: docker-compose-base.yml
       service: ag_base
-    entrypoint: start_gateway.sh https://syndicate-ms-datasets.appspot.com:80 cyverse@opencloud.us pov ag_pov demo2.opencloud.cs.arizona.edu:31525 pov_anonymous
+    entrypoint: start_gateway.sh http://syndicate-ms-datasets.appspot.com:80 cyverse@opencloud.us pov ag_pov demo2.opencloud.cs.arizona.edu:31525 pov_anonymous
     ports:
       - "31525:31525"
     volumes:
