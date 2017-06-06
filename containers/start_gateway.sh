@@ -14,24 +14,99 @@ PRIVATE_MOUNT_DIR=/opt/private
 DRIVER_MOUNT_DIR=/opt/driver
 DRIVER_DIR=/home/syndicate/ag_driver
 
+
 # REGISTER SYNDICATE
 echo "Registering Syndicate..."
-syndicate -d --trust_public_key setup ${USER} ${PRIVATE_MOUNT_DIR}/${USER} ${MS_HOST}
-syndicate -d reload_user_cert ${USER}
+syndicate --trust_public_key setup ${USER} ${PRIVATE_MOUNT_DIR}/${USER} ${MS_HOST}
+if [ $? -ne 0 ]
+then
+    echo "Registering Syndicate... Failed!"
+    exit 1
+fi
+
+syndicate reload_user_cert ${USER}
 echo "Registering Syndicate... Done!"
+
+
+# CLEAN UP
+# REMOVE AN ACQUISITION GATEWAY
+syndicate read_gateway ${AG_NAME} &> /dev/null
+if [ $? -eq 0 ]
+then
+    echo "Removing an AG..."
+    syndicate delete_gateway ${AG_NAME} &> /dev/null
+    if [ $? -ne 0 ]
+    then
+        # do it again
+        syndicate delete_gateway ${AG_NAME} &> /dev/null
+    fi
+
+    syndicate read_gateway ${AG_NAME} &> /dev/null
+    if [ $? -eq 0 ]
+    then
+        echo "Gateway ${AG_NAME} is not removed"
+        exit 1
+    fi
+
+    echo "Removing an AG... Done!"
+fi
+
+
+# REMOVE AN ANONYMOUS USER GATEWAY
+syndicate read_gateway ${UG_NAME} &> /dev/null
+if [ $? -eq 0 ]
+then
+    echo "Removing an anonymous UG..."
+    syndicate delete_gateway ${UG_NAME} &> /dev/null
+    if [ $? -ne 0 ]
+    then
+        # do it again
+        syndicate delete_gateway ${UG_NAME} &> /dev/null
+    fi
+
+    syndicate read_gateway ${UG_NAME} &> /dev/null
+    if [ $? -eq 0 ]
+    then
+        echo "Gateway ${UG_NAME} is not removed"
+        exit 1
+    fi
+
+    echo "Removing an anonymous UG... Done!"
+fi
+
+
+# REMOVE A VOLUME
+syndicate read_volume ${VOLUME} &> /dev/null
+if [ $? -eq 0 ]
+then
+    echo "Removing a Volume..."
+    syndicate delete_volume ${VOLUME} &> /dev/null
+    if [ $? -ne 0 ]
+    then
+        # do it again
+        syndicate delete_volume ${VOLUME} &> /dev/null
+    fi
+
+    syndicate reload_volume_cert ${VOLUME}
+    if [ $? -eq 0 ]
+    then
+        echo "Volume ${VOLUME} is not removed"
+        exit 1
+    fi
+
+    echo "Removing a Syndicate Volume... Done!"
+fi
 
 
 # CREATE A VOLUME
 echo "Creating a Syndicate Volume..."
-syndicate read_volume ${VOLUME} &> /dev/null
-if [ $? -eq 0 ]
+echo "y" | syndicate create_volume name=${VOLUME} description=${VOLUME} blocksize=1048576 email=${USER} archive=True allow_anon=True private=False
+if [ $? -ne 0 ]
 then
-    echo "Volume ${VOLUME} already exists... Skip"
-else
-    echo "y" | syndicate -d create_volume name=${VOLUME} description=${VOLUME} blocksize=1048576 email=${USER} archive=True allow_anon=True private=False
+    echo "Creating a Syndicate Volume... Failed!"
+    exit 1
 fi
-
-syndicate -d reload_volume_cert ${VOLUME}
+syndicate reload_volume_cert ${VOLUME}
 echo "Creating a Syndicate Volume... Done!"
 
 
@@ -47,30 +122,34 @@ sudo chmod -R 744 ${DRIVER_DIR}
 echo "Preparing driver code... Done!"
 
 
-# CREATE AN USER GATEWAY FOR ANONYMOUS ACCESS
-echo "Creating an UG for anonymous access..."
-syndicate read_gateway ${UG_NAME} &> /dev/null
-if [ $? -eq 0 ]
+# CREATE AN ANONYMOUS USER GATEWAY
+echo "Creating an anonymous UG..."
+echo "y" | syndicate create_gateway email=ANONYMOUS volume=${VOLUME} name=${UG_NAME} private_key=auto type=UG caps=READONLY host=localhost
+if [ $? -ne 0 ]
 then
-    echo "Gateway ${UG_NAME} already exists... Skip"
-else
-    echo "y" | syndicate -d create_gateway email=ANONYMOUS volume=${VOLUME} name=${UG_NAME} private_key=auto type=UG caps=READONLY host=localhost
+    echo "Creating an anonymous UG... Failed!"
+    exit 1
 fi
-echo "Creating an UG for anonymous access... Done!"
+echo "Creating an anonymous UG... Done!"
+
 
 # CREATE AN ACQUISITION GATEWAY
 echo "Creating an AG..."
-syndicate read_gateway ${AG_NAME} &> /dev/null
-if [ $? -eq 0 ]
+echo "y" | syndicate create_gateway email=${USER} volume=${VOLUME} name=${AG_NAME} private_key=auto type=AG caps=ALL host=${AG_HOSTNAME} port=${AG_PORT}
+syndicate reload_gateway_cert ${AG_NAME}
+if [ $? -ne 0 ]
 then
-    echo "Gateway ${AG_NAME} already exists... Skip"
-else
-    echo "y" | syndicate -d create_gateway email=${USER} volume=${VOLUME} name=${AG_NAME} private_key=auto type=AG caps=ALL host=${AG_HOSTNAME} port=${AG_PORT}
+    echo "Creating an AG... Failed!"
+    exit 1
 fi
-
-syndicate -d reload_gateway_cert ${AG_NAME}
-echo "y" | syndicate -d update_gateway ${AG_NAME} driver=${DRIVER_DIR}
+echo "y" | syndicate update_gateway ${AG_NAME} driver=${DRIVER_DIR}
+if [ $? -ne 0 ]
+then
+    echo "Creating an AG... Failed!"
+    exit 1
+fi
 echo "Creating an AG... Done!"
+
 
 # RUN AG
 echo "Run AG..."
