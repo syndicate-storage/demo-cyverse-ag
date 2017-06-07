@@ -14,10 +14,10 @@ PRIVATE_MOUNT_DIR=/opt/private
 DRIVER_MOUNT_DIR=/opt/driver
 DRIVER_DIR=/home/syndicate/ag_driver
 
-$DEBUG_FLAG=""
+DEBUG_FLAG=""
 if [[ -n $AG_DEBUG ]] && ([[ $AG_DEBUG == "TRUE" ]] || [[ $AG_DEBUG == "true" ]]); then
     echo "PRINT DEBUG MESSAGES"
-    $DEBUG_FLAG="-d"
+    DEBUG_FLAG="-d"
 fi
 
 # REGISTER SYNDICATE
