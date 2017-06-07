@@ -13,6 +13,8 @@ services:
     volumes:
       - ../imicrobe/private:/opt/private:rw
       - ../imicrobe/driver:/opt/driver:rw
+    environment:
+      - DEBUG_FLAG="TRUE"
 
   opencloud_demo_ivirus:
     extends:
@@ -24,6 +26,8 @@ services:
     volumes:
       - ../ivirus/private:/opt/private:rw
       - ../ivirus/driver:/opt/driver:rw
+    environment:
+      - DEBUG_FLAG="TRUE"
 
   opencloud_demo_digbio:
     extends:
@@ -35,6 +39,8 @@ services:
     volumes:
       - ../digbio/private:/opt/private:rw
       - ../digbio/driver:/opt/driver:rw
+    environment:
+      - DEBUG_FLAG="TRUE"
 
   opencloud_demo_panzea:
     extends:
@@ -46,6 +52,8 @@ services:
     volumes:
       - ../panzea/private:/opt/private:rw
       - ../panzea/driver:/opt/driver:rw
+    environment:
+      - DEBUG_FLAG="TRUE"
 
   opencloud_demo_pov:
     extends:
@@ -57,3 +65,5 @@ services:
     volumes:
       - ../pov/private:/opt/private:rw
       - ../pov/driver:/opt/driver:rw
+    environment:
+      - DEBUG_FLAG="TRUE"

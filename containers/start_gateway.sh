@@ -14,36 +14,32 @@ PRIVATE_MOUNT_DIR=/opt/private
 DRIVER_MOUNT_DIR=/opt/driver
 DRIVER_DIR=/home/syndicate/ag_driver
 
+$DEBUG_FLAG=""
+if [[ -n $AG_DEBUG ]] && ([[ $AG_DEBUG == "TRUE" ]] || [[ $AG_DEBUG == "true" ]]); then
+    echo "PRINT DEBUG MESSAGES"
+    $DEBUG_FLAG="-d"
+fi
 
 # REGISTER SYNDICATE
 echo "Registering Syndicate..."
-syndicate --trust_public_key setup ${USER} ${PRIVATE_MOUNT_DIR}/${USER} ${MS_HOST}
-if [ $? -ne 0 ]
-then
+syndicate $DEBUG_FLAG --trust_public_key setup ${USER} ${PRIVATE_MOUNT_DIR}/${USER} ${MS_HOST}
+if [ $? -ne 0 ]; then
     echo "Registering Syndicate... Failed!"
     exit 1
 fi
 
-syndicate reload_user_cert ${USER}
+syndicate $DEBUG_FLAG reload_user_cert ${USER}
 echo "Registering Syndicate... Done!"
 
 
 # CLEAN UP
 # REMOVE AN ACQUISITION GATEWAY
-syndicate read_gateway ${AG_NAME} &> /dev/null
-if [ $? -eq 0 ]
-then
+syndicate $DEBUG_FLAG read_gateway ${AG_NAME} &> /dev/null
+if [ $? -eq 0 ]; then
     echo "Removing an AG..."
-    syndicate delete_gateway ${AG_NAME} &> /dev/null
-    if [ $? -ne 0 ]
-    then
-        # do it again
-        syndicate delete_gateway ${AG_NAME} &> /dev/null
-    fi
-
-    syndicate read_gateway ${AG_NAME} &> /dev/null
-    if [ $? -eq 0 ]
-    then
+    syndicate $DEBUG_FLAG delete_gateway ${AG_NAME} &> /dev/null
+    syndicate $DEBUG_FLAG read_gateway ${AG_NAME} &> /dev/null
+    if [ $? -eq 0 ]; then
         echo "Gateway ${AG_NAME} is not removed"
         exit 1
     fi
@@ -53,20 +49,12 @@ fi
 
 
 # REMOVE AN ANONYMOUS USER GATEWAY
-syndicate read_gateway ${UG_NAME} &> /dev/null
-if [ $? -eq 0 ]
-then
+syndicate $DEBUG_FLAG read_gateway ${UG_NAME} &> /dev/null
+if [ $? -eq 0 ]; then
     echo "Removing an anonymous UG..."
-    syndicate delete_gateway ${UG_NAME} &> /dev/null
-    if [ $? -ne 0 ]
-    then
-        # do it again
-        syndicate delete_gateway ${UG_NAME} &> /dev/null
-    fi
-
-    syndicate read_gateway ${UG_NAME} &> /dev/null
-    if [ $? -eq 0 ]
-    then
+    syndicate $DEBUG_FLAG delete_gateway ${UG_NAME} &> /dev/null
+    syndicate $DEBUG_FLAG read_gateway ${UG_NAME} &> /dev/null
+    if [ $? -eq 0 ]; then
         echo "Gateway ${UG_NAME} is not removed"
         exit 1
     fi
@@ -76,38 +64,29 @@ fi
 
 
 # REMOVE A VOLUME
-syndicate read_volume ${VOLUME} &> /dev/null
-if [ $? -eq 0 ]
-then
+syndicate $DEBUG_FLAG read_volume ${VOLUME} &> /dev/null
+if [ $? -eq 0 ]; then
     echo "Removing a Volume..."
-    syndicate delete_volume ${VOLUME} &> /dev/null
-    if [ $? -ne 0 ]
-    then
-        # do it again
-        syndicate delete_volume ${VOLUME} &> /dev/null
-    fi
-
-    syndicate reload_volume_cert ${VOLUME}
-    if [ $? -eq 0 ]
-    then
+    syndicate $DEBUG_FLAG delete_volume ${VOLUME} &> /dev/null
+    syndicate $DEBUG_FLAG reload_volume_cert ${VOLUME}
+    if [ $? -eq 0 ]; then
         echo "Volume ${VOLUME} is not removed"
         exit 1
     fi
 
-    echo "Removing a Syndicate Volume... Done!"
+    echo "Removing a Volume... Done!"
 fi
 
 
 # CREATE A VOLUME
-echo "Creating a Syndicate Volume..."
-echo "y" | syndicate create_volume name=${VOLUME} description=${VOLUME} blocksize=1048576 email=${USER} archive=True allow_anon=True private=False
-if [ $? -ne 0 ]
-then
-    echo "Creating a Syndicate Volume... Failed!"
+echo "Creating a Volume..."
+echo "y" | syndicate $DEBUG_FLAG create_volume name=${VOLUME} description=${VOLUME} blocksize=1048576 email=${USER} archive=True allow_anon=True private=False
+if [ $? -ne 0 ]; then
+    echo "Creating a Volume... Failed!"
     exit 1
 fi
-syndicate reload_volume_cert ${VOLUME}
-echo "Creating a Syndicate Volume... Done!"
+syndicate $DEBUG_FLAG reload_volume_cert ${VOLUME}
+echo "Creating a Volume... Done!"
 
 
 # PREPARE DRIVER CODE
@@ -124,9 +103,8 @@ echo "Preparing driver code... Done!"
 
 # CREATE AN ANONYMOUS USER GATEWAY
 echo "Creating an anonymous UG..."
-echo "y" | syndicate create_gateway email=ANONYMOUS volume=${VOLUME} name=${UG_NAME} private_key=auto type=UG caps=READONLY host=localhost
-if [ $? -ne 0 ]
-then
+echo "y" | syndicate $DEBUG_FLAG create_gateway email=ANONYMOUS volume=${VOLUME} name=${UG_NAME} private_key=auto type=UG caps=READONLY host=localhost
+if [ $? -ne 0 ]; then
     echo "Creating an anonymous UG... Failed!"
     exit 1
 fi
@@ -135,16 +113,14 @@ echo "Creating an anonymous UG... Done!"
 
 # CREATE AN ACQUISITION GATEWAY
 echo "Creating an AG..."
-echo "y" | syndicate create_gateway email=${USER} volume=${VOLUME} name=${AG_NAME} private_key=auto type=AG caps=ALL host=${AG_HOSTNAME} port=${AG_PORT}
-syndicate reload_gateway_cert ${AG_NAME}
-if [ $? -ne 0 ]
-then
+echo "y" | syndicate $DEBUG_FLAG create_gateway email=${USER} volume=${VOLUME} name=${AG_NAME} private_key=auto type=AG caps=ALL host=${AG_HOSTNAME} port=${AG_PORT}
+syndicate $DEBUG_FLAG reload_gateway_cert ${AG_NAME}
+if [ $? -ne 0 ]; then
     echo "Creating an AG... Failed!"
     exit 1
 fi
-echo "y" | syndicate update_gateway ${AG_NAME} driver=${DRIVER_DIR}
-if [ $? -ne 0 ]
-then
+echo "y" | syndicate $DEBUG_FLAG update_gateway ${AG_NAME} driver=${DRIVER_DIR}
+if [ $? -ne 0 ]; then
     echo "Creating an AG... Failed!"
     exit 1
 fi
