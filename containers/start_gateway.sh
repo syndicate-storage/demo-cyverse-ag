@@ -27,7 +27,6 @@ if [ $? -ne 0 ]; then
     echo "Registering Syndicate... Failed!"
     exit 1
 fi
-
 syndicate $DEBUG_FLAG reload_user_cert ${USER}
 echo "Registering Syndicate... Done!"
 
