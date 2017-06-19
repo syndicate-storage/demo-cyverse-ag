@@ -67,3 +67,16 @@ services:
       - ../pov/driver:/opt/driver:rw
     environment:
       - DEBUG_FLAG="TRUE"
+
+  production_mssa_mrsa:
+    extends:
+      file: docker-compose-base.yml
+      service: ag_base
+    entrypoint: start_gateway.sh http://syndicate-ms-datasets-prod.appspot.com:80 cyverse@opencloud.us mssa_mrsa ag_mssa_mrsa demo2.opencloud.cs.arizona.edu:31526 mssa_mrsa_anonymous
+    ports:
+      - "31526:31526"
+    volumes:
+      - ../mssa_mrsa/private:/opt/private:rw
+      - ../mssa_mrsa/driver:/opt/driver:rw
+    environment:
+      - DEBUG_FLAG="TRUE"
