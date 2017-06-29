@@ -1,0 +1,15 @@
+{
+   "DATASET_DIR":       "/iplant/home/shared/eht/2013",
+   "EXEC_FMT":          "/usr/bin/env python -m syndicate.ag.gateway",
+   "DRIVER":            "syndicate.ag.drivers.fs",
+   "DRIVER_FS_PLUGIN": "irods",
+   "DRIVER_FS_PLUGIN_CONFIG":
+      {
+         "irods":
+            {
+               "host":  "data.cyverse.org",
+               "port":  1247,
+               "zone":  "iplant"
+            }
+      }
+}
