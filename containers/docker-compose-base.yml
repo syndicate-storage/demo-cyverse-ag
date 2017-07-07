@@ -1,10 +1,10 @@
-# docker-compose.yml for demo-cyverse-ag
+# docker-compose.yml
 
 version: '2'
 
 services:
   ag_base:
-    image: demo-cyverse-ag
+    image: public-dataset-ag
     build:
       context: .
       dockerfile: Dockerfile.syndicate

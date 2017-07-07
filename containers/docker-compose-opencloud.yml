@@ -1,9 +1,9 @@
-# docker-compose.yml for demo-cyverse-ag
+# docker-compose.yml
 
 version: '2'
 
 services:
-  opencloud_demo_imicrobe:
+  opencloud_imicrobe:
     extends:
       file: docker-compose-base.yml
       service: ag_base
@@ -16,7 +16,7 @@ services:
     environment:
       - DEBUG_FLAG="TRUE"
 
-  opencloud_demo_ivirus:
+  opencloud_ivirus:
     extends:
       file: docker-compose-base.yml
       service: ag_base
@@ -29,7 +29,7 @@ services:
     environment:
       - DEBUG_FLAG="TRUE"
 
-#  opencloud_demo_digbio:
+#  opencloud_digbio:
 #    extends:
 #      file: docker-compose-base.yml
 #      service: ag_base
@@ -42,7 +42,7 @@ services:
 #    environment:
 #      - DEBUG_FLAG="TRUE"
 #
-#  opencloud_demo_panzea:
+#  opencloud_panzea:
 #    extends:
 #      file: docker-compose-base.yml
 #      service: ag_base
@@ -55,7 +55,7 @@ services:
 #    environment:
 #      - DEBUG_FLAG="TRUE"
 
-  opencloud_demo_pov:
+  opencloud_pov:
     extends:
       file: docker-compose-base.yml
       service: ag_base

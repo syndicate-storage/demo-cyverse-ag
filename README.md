@@ -1,2 +1,2 @@
-# demo-cyverse-ag
-Syndicate AGs for CyVerse datasets
+# AGs for public datasets 
+Syndicate AGs for public datasets
