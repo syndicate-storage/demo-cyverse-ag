@@ -5,6 +5,7 @@ VOLUME="$3"
 AG_NAME="$4"
 AG_HOST="$5"
 UG_NAME="$6"
+RESTART=$7
 
 AG_HOST_ARR=(`echo ${AG_HOST} | tr ':' ' '`)
 AG_HOSTNAME=${AG_HOST_ARR[0]}
@@ -30,7 +31,7 @@ fi
 syndicate $DEBUG_FLAG reload_user_cert ${USER}
 echo "Registering Syndicate... Done!"
 
-
+    
 # CLEAN UP
 # REMOVE AN ACQUISITION GATEWAY
 syndicate $DEBUG_FLAG read_gateway ${AG_NAME} &> /dev/null
@@ -85,6 +86,7 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 syndicate $DEBUG_FLAG reload_volume_cert ${VOLUME}
+sudo syndicate $DEBUG_FLAG export_volume ${VOLUME} ${PRIVATE_MOUNT_DIR}/
 echo "Creating a Volume... Done!"
 
 
@@ -123,6 +125,7 @@ if [ $? -ne 0 ]; then
     echo "Creating an AG... Failed!"
     exit 1
 fi
+sudo syndicate $DEBUG_FLAG export_gateway ${AG_NAME} ${PRIVATE_MOUNT_DIR}/
 echo "Creating an AG... Done!"
 
 
