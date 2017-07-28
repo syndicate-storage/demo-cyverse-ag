@@ -14,7 +14,7 @@ services:
       - ../imicrobe/private:/opt/private:rw
       - ../imicrobe/driver:/opt/driver:rw
     environment:
-      - AG_DEBUG="TRUE"
+      - AG_DEBUG=TRUE
 
   opencloud_ivirus:
     extends:
@@ -27,7 +27,7 @@ services:
       - ../ivirus/private:/opt/private:rw
       - ../ivirus/driver:/opt/driver:rw
     environment:
-      - AG_DEBUG="TRUE"
+      - AG_DEBUG=TRUE
 
 #  opencloud_digbio:
 #    extends:
@@ -40,7 +40,7 @@ services:
 #      - ../digbio/private:/opt/private:rw
 #      - ../digbio/driver:/opt/driver:rw
 #    environment:
-#      - AG_DEBUG="TRUE"
+#      - AG_DEBUG=TRUE
 #
 #  opencloud_panzea:
 #    extends:
@@ -53,7 +53,7 @@ services:
 #      - ../panzea/private:/opt/private:rw
 #      - ../panzea/driver:/opt/driver:rw
 #    environment:
-#      - AG_DEBUG="TRUE"
+#      - AG_DEBUG=TRUE
 
   opencloud_pov:
     extends:
@@ -66,4 +66,4 @@ services:
       - ../pov/private:/opt/private:rw
       - ../pov/driver:/opt/driver:rw
     environment:
-      - AG_DEBUG="TRUE"
+      - AG_DEBUG=TRUE

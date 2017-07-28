@@ -14,4 +14,4 @@ services:
       - ../imicrobe/private:/opt/private:rw
       - ../imicrobe/driver:/opt/driver:rw
     environment:
-      - AG_DEBUG="TRUE"
+      - AG_DEBUG=TRUE
