@@ -20,18 +20,18 @@ if [[ -n $AG_DEBUG ]] && ([[ $AG_DEBUG == "TRUE" ]] || [[ $AG_DEBUG == "true" ]]
     DEBUG_FLAG="-d"
 fi
 
-AG_RESTART=false
-if [[ -z $RESTART ]] || ([[ $RESTART == "TRUE" ]] || [[ $RESTART == "true" ]]); then
+RESTART=false
+if [[ -z $AG_RESTART ]] || ([[ $AG_RESTART == "TRUE" ]] || [[ $AG_RESTART == "true" ]]); then
     # enter when RESTART is not given, or set to TRUE
     if [ -f "${PRIVATE_MOUNT_DIR}/${AG_NAME}" ] && [ -f "${PRIVATE_MOUNT_DIR}/${VOLUME}" ]; then
         echo "Found existing gateway and volume"
         echo "AG RESTART"
-        AG_RESTART=true
+        RESTART=true
     fi
 fi
 
-if [[ -n $RESTART ]] && ([[ $RESTART == "FALSE" ]] || [[ $RESTART == "false" ]]); then
-    AG_RESTART=false
+if [[ -n $AG_RESTART ]] && ([[ $AG_RESTART == "FALSE" ]] || [[ $AG_RESTART == "false" ]]); then
+    RESTART=false
 fi
 
 # REGISTER SYNDICATE
@@ -46,7 +46,7 @@ echo "Registering Syndicate... Done!"
 
 
 # CLEAN UP
-if [ $AG_RESTART = false ]; then
+if [ $RESTART = false ]; then
     # REMOVE AN ACQUISITION GATEWAY
     syndicate $DEBUG_FLAG read_gateway ${AG_NAME} &> /dev/null
     if [ $? -eq 0 ]; then
@@ -93,7 +93,7 @@ if [ $AG_RESTART = false ]; then
 fi
 
 
-if [ $AG_RESTART = false ]; then
+if [ $RESTART = false ]; then
     # CREATE A VOLUME
     echo "Creating a Volume..."
     echo "y" | syndicate $DEBUG_FLAG create_volume name=${VOLUME} description=${VOLUME} blocksize=1048576 email=${USER} archive=True allow_anon=True private=False
@@ -129,7 +129,7 @@ sudo chmod -R 744 ${DRIVER_DIR}
 echo "Preparing driver code... Done!"
 
 
-if [ $AG_RESTART = false ]; then
+if [ $RESTART = false ]; then
     # CREATE AN ANONYMOUS USER GATEWAY
     echo "Creating an anonymous UG..."
     echo "y" | syndicate $DEBUG_FLAG create_gateway email=ANONYMOUS volume=${VOLUME} name=${UG_NAME} private_key=auto type=UG caps=READONLY host=localhost
@@ -141,7 +141,7 @@ if [ $AG_RESTART = false ]; then
 fi
 
 
-if [ $AG_RESTART = false ]; then
+if [ $RESTART = false ]; then
     # CREATE AN ACQUISITION GATEWAY
     echo "Creating an AG..."
     echo "y" | syndicate $DEBUG_FLAG create_gateway email=${USER} volume=${VOLUME} name=${AG_NAME} private_key=auto type=AG caps=ALL host=${AG_HOSTNAME} port=${AG_PORT}
@@ -152,7 +152,7 @@ if [ $AG_RESTART = false ]; then
     syndicate $DEBUG_FLAG reload_gateway_cert ${AG_NAME}
     echo "y" | syndicate $DEBUG_FLAG update_gateway ${AG_NAME} driver=${DRIVER_DIR}
     if [ $? -ne 0 ]; then
-        echo "Creating an AG... Failed!"
+        echo "Updating an AG... Failed!"
         exit 1
     fi
     sudo syndicate $DEBUG_FLAG export_gateway ${AG_NAME} ${PRIVATE_MOUNT_DIR}/
@@ -168,7 +168,7 @@ else
     syndicate $DEBUG_FLAG reload_gateway_cert ${AG_NAME}
     echo "y" | syndicate $DEBUG_FLAG update_gateway ${AG_NAME} driver=${DRIVER_DIR}
     if [ $? -ne 0 ]; then
-        echo "Creating an AG... Failed!"
+        echo "Updating an AG... Failed!"
         exit 1
     fi
     sudo rm ${PRIVATE_MOUNT_DIR}/${AG_NAME}
