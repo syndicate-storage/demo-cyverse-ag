@@ -15,13 +15,13 @@ DRIVER_MOUNT_DIR=/opt/driver
 DRIVER_DIR=/home/syndicate/ag_driver
 
 DEBUG_FLAG=""
-if [[ -n $AG_DEBUG ]] && ([[ $AG_DEBUG == "TRUE" ]] || [[ $AG_DEBUG == "true" ]]); then
+if [[ -n $AG_DEBUG ]] && ([[ $AG_DEBUG = "TRUE" ]] || [[ $AG_DEBUG = "true" ]]); then
     echo "PRINT DEBUG MESSAGES"
     DEBUG_FLAG="-d"
 fi
 
 RESTART=false
-if [[ -z $AG_RESTART ]] || ([[ $AG_RESTART == "TRUE" ]] || [[ $AG_RESTART == "true" ]]); then
+if [[ -z $AG_RESTART ]] || ([[ $AG_RESTART = "TRUE" ]] || [[ $AG_RESTART = "true" ]]); then
     # enter when RESTART is not given, or set to TRUE
     if [ -f "${PRIVATE_MOUNT_DIR}/${AG_NAME}" ] && [ -f "${PRIVATE_MOUNT_DIR}/${VOLUME}" ]; then
         echo "Found existing gateway and volume"
@@ -30,7 +30,7 @@ if [[ -z $AG_RESTART ]] || ([[ $AG_RESTART == "TRUE" ]] || [[ $AG_RESTART == "tr
     fi
 fi
 
-if [[ -n $AG_RESTART ]] && ([[ $AG_RESTART == "FALSE" ]] || [[ $AG_RESTART == "false" ]]); then
+if [[ -n $AG_RESTART ]] && ([[ $AG_RESTART = "FALSE" ]] || [[ $AG_RESTART = "false" ]]); then
     RESTART=false
 fi
 
