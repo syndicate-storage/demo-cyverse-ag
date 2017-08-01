@@ -45,6 +45,12 @@ syndicate $DEBUG_FLAG reload_user_cert ${USER}
 echo "Registering Syndicate... Done!"
 
 
+if [ -f "${PRIVATE_MOUNT_DIR}/after_syndicate_regist.sh" ]; then
+    echo "Calling after_syndicate_regist.sh"
+    sudo sh ${PRIVATE_MOUNT_DIR}/after_syndicate_regist.sh
+fi
+
+
 # CLEAN UP
 if [ $RESTART = false ]; then
     # REMOVE AN ACQUISITION GATEWAY
@@ -93,6 +99,12 @@ if [ $RESTART = false ]; then
 fi
 
 
+if [ -f "${PRIVATE_MOUNT_DIR}/after_syndicate_cleanup.sh" ]; then
+    echo "Calling after_syndicate_cleanup.sh"
+    sudo sh ${PRIVATE_MOUNT_DIR}/after_syndicate_cleanup.sh
+fi
+
+
 if [ $RESTART = false ]; then
     # CREATE A VOLUME
     echo "Creating a Volume..."
@@ -117,6 +129,12 @@ else
 fi
 
 
+if [ -f "${PRIVATE_MOUNT_DIR}/after_syndicate_volume_creation.sh" ]; then
+    echo "Calling after_syndicate_volume_creation.sh"
+    sudo sh ${PRIVATE_MOUNT_DIR}/after_syndicate_volume_creation.sh
+fi
+
+
 # PREPARE DRIVER CODE
 echo "Preparing driver code..."
 sudo rm -rf ${DRIVER_DIR}
@@ -127,6 +145,12 @@ sudo cp ${DRIVER_MOUNT_DIR}/secrets ${DRIVER_DIR}/
 sudo chown -R syndicate:syndicate ${DRIVER_DIR}
 sudo chmod -R 744 ${DRIVER_DIR}
 echo "Preparing driver code... Done!"
+
+
+if [ -f "${PRIVATE_MOUNT_DIR}/after_syndicate_driver_download.sh" ]; then
+    echo "Calling after_syndicate_driver_download.sh"
+    sudo sh ${PRIVATE_MOUNT_DIR}/after_syndicate_driver_download.sh
+fi
 
 
 if [ $RESTART = false ]; then
@@ -175,6 +199,13 @@ else
     sudo syndicate $DEBUG_FLAG export_gateway ${AG_NAME} ${PRIVATE_MOUNT_DIR}/
     echo "Importing an AG... Done!"
 fi
+
+
+if [ -f "${PRIVATE_MOUNT_DIR}/after_syndicate_ag_creation.sh" ]; then
+    echo "Calling after_syndicate_ag_creation.sh"
+    sudo sh ${PRIVATE_MOUNT_DIR}/after_syndicate_ag_creation.sh
+fi
+
 
 # RUN AG
 echo "Run AG..."
