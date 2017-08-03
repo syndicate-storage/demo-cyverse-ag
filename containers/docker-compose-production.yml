@@ -119,3 +119,16 @@ services:
       - ../genbank/driver:/opt/driver:rw
     environment:
       - AG_DEBUG=TRUE
+
+  production_refseq:
+    extends:
+      file: docker-compose-base.yml
+      service: ag_base
+    entrypoint: start_gateway.sh http://syndicate-ms-datasets-prod.appspot.com:80 cyverse@opencloud.us refseq ag_refseq demo2.opencloud.cs.arizona.edu:31530 refseq_anonymous
+    ports:
+      - "31530:31530"
+    volumes:
+      - ../refseq/private:/opt/private:rw
+      - ../refseq/driver:/opt/driver:rw
+    environment:
+      - AG_DEBUG=TRUE
