@@ -1,3 +1,4 @@
+DOCKER_COMPOSE_BASE ?= docker-compose -f containers/docker-compose-base.yml
 DOCKER_COMPOSE_OPENCLOUD ?= docker-compose -f containers/docker-compose-opencloud.yml
 DOCKER_COMPOSE_PRODUCTION ?= docker-compose -f containers/docker-compose-production.yml
 DOCKER_COMPOSE_TESTS ?= docker-compose -f containers/docker-compose-tests.yml
@@ -9,24 +10,16 @@ DOCKER_COMPOSE_TESTS ?= docker-compose -f containers/docker-compose-tests.yml
 
 all: up
 
-build_opencloud:
-	$(DOCKER_COMPOSE_OPENCLOUD) build
+build:
+	$(DOCKER_COMPOSE_BASE) build
 
-build_production:
-	$(DOCKER_COMPOSE_PRODUCTION) build
-
-build_tests:
-	$(DOCKER_COMPOSE_TESTS) build
-
-build: build_opencloud build_production build_tests
-
-up_opencloud: build_opencloud
+up_opencloud:
 	-$(DOCKER_COMPOSE_OPENCLOUD) up -d
 
-up_production: build_production
+up_production:
 	-$(DOCKER_COMPOSE_PRODUCTION) up -d
 
-up_tests: build_tests
+up_tests:
 	-$(DOCKER_COMPOSE_TESTS) up -d
 
 up: up_opencloud up_production up_tests
