@@ -133,6 +133,19 @@ services:
     environment:
       - AG_DEBUG=TRUE
 
+  production_nanograv9y:
+    extends:
+      file: docker-compose-base.yml
+      service: ag_base
+    entrypoint: start_gateway.sh http://syndicate-ms-datasets-prod.appspot.com:80 cyverse@opencloud.us nanograv9y ag_nanograv9y demo2.opencloud.cs.arizona.edu:31532 nanograv9y_anonymous
+    ports:
+      - "31532:31532"
+    volumes:
+      - ../nanograv9y/private:/opt/private:rw
+      - ../nanograv9y/driver:/opt/driver:rw
+    environment:
+      - AG_DEBUG=TRUE
+
   production_uhslcrqds:
     extends:
       file: docker-compose-base.yml
