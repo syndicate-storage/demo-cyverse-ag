@@ -1,0 +1,18 @@
+{
+   "DATASET_DIR":       "/uhslc/fast",
+   "MS_TTL": 86400,
+   "AG_TTL": 86400,
+   "DATA_CACHE_SIZE": 300,
+   "DATA_CACHE_TTL": 3600,
+   "EXEC_FMT":          "/usr/bin/env python -m syndicate.ag.gateway",
+   "DRIVER":            "syndicate.ag.drivers.fs",
+   "DRIVER_FS_PLUGIN":  "ftp",
+   "DRIVER_FS_PLUGIN_CONFIG":
+      {
+         "ftp":
+            {
+               "host":  "ftp.soest.hawaii.edu",
+               "port":  21
+            }
+      }
+}
