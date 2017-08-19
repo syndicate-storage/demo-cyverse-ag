@@ -165,6 +165,12 @@ if [ $RESTART = false ]; then
 fi
 
 
+if [ -f "${PRIVATE_MOUNT_DIR}/after_syndicate_ug_creation.sh" ]; then
+    echo "Calling after_syndicate_ug_creation.sh"
+    sudo sh ${PRIVATE_MOUNT_DIR}/after_syndicate_ug_creation.sh
+fi
+
+
 if [ $RESTART = false ]; then
     # CREATE AN ACQUISITION GATEWAY
     echo "Creating an AG..."
