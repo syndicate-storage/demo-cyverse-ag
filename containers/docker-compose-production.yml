@@ -146,28 +146,15 @@ services:
     environment:
       - AG_DEBUG=TRUE
 
-  production_uhslcrqds:
+  production_uhslc:
     extends:
       file: docker-compose-base.yml
       service: ag_base
-    entrypoint: start_gateway.sh http://syndicate-ms-datasets-prod.appspot.com:80 cyverse@opencloud.us uhslcrqds ag_uhslcrqds node18-syn.its.hawaii.edu:31541 uhslcrqds_anonymous
+    entrypoint: start_gateway.sh http://syndicate-ms-datasets-prod.appspot.com:80 cyverse@opencloud.us uhslc ag_uhslc node18-syn.its.hawaii.edu:31541 uhslc_anonymous
     ports:
       - "31541:31541"
     volumes:
-      - ../uhslcrqds/private:/opt/private:rw
-      - ../uhslcrqds/driver:/opt/driver:rw
-    environment:
-      - AG_DEBUG=TRUE
-
-  production_uhslcfast:
-    extends:
-      file: docker-compose-base.yml
-      service: ag_base
-    entrypoint: start_gateway.sh http://syndicate-ms-datasets-prod.appspot.com:80 cyverse@opencloud.us uhslcfast ag_uhslcfast node18-syn.its.hawaii.edu:31542 uhslcfast_anonymous
-    ports:
-      - "31542:31542"
-    volumes:
-      - ../uhslcfast/private:/opt/private:rw
-      - ../uhslcfast/driver:/opt/driver:rw
+      - ../uhslc/private:/opt/private:rw
+      - ../uhslc/driver:/opt/driver:rw
     environment:
       - AG_DEBUG=TRUE

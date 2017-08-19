@@ -1,4 +1,4 @@
-GATEWAY_NAME="uhslcrqds_anonymous"
+GATEWAY_NAME="uhslc_anonymous"
 DRIVER_DIR=/home/syndicate/ug_driver
 
 mkdir ${DRIVER_DIR}

@@ -161,6 +161,7 @@ if [ $RESTART = false ]; then
         echo "Creating an anonymous UG... Failed!"
         exit 1
     fi
+    sudo syndicate $DEBUG_FLAG export_gateway ${UG_NAME} ${PRIVATE_MOUNT_DIR}/
     echo "Creating an anonymous UG... Done!"
 fi
 
