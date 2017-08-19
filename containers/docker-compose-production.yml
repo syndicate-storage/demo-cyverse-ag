@@ -171,16 +171,3 @@ services:
       - ../uhslcfast/driver:/opt/driver:rw
     environment:
       - AG_DEBUG=TRUE
-
-  production_uhslcrqdstest:
-    extends:
-      file: docker-compose-base.yml
-      service: ag_base
-    entrypoint: start_gateway.sh http://syndicate-ms-datasets-prod.appspot.com:80 cyverse@opencloud.us uhslcrqdstest ag_uhslcrqdstest node18-syn.its.hawaii.edu:31543 uhslcrqdstest_anonymous
-    ports:
-      - "31543:31543"
-    volumes:
-      - ../uhslcrqdstest/private:/opt/private:rw
-      - ../uhslcrqdstest/driver:/opt/driver:rw
-    environment:
-      - AG_DEBUG=TRUE
