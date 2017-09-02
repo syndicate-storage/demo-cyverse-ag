@@ -4,3 +4,4 @@ VOLUME="uhslc"
 AG_NAME="ag_uhslc"
 AG_HOST="node18-syn.its.hawaii.edu:31541"
 ANONYMOUS_UG_NAME="uhslc_anonymous"
+SYNC_ON_RESTART=false

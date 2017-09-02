@@ -1,4 +1,17 @@
 #! /bin/bash
+#   Copyright 2016 The Trustees of University of Arizona
+#
+#   Licensed under the Apache License, Version 2.0 (the "License" );
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
 
 GATEWAY_CONFIG_MOUNT_DIR=/opt/ag_config
 CERT_MOUNT_DIR=${GATEWAY_CONFIG_MOUNT_DIR}/certs
@@ -34,6 +47,7 @@ fi
 if [[ -n $AG_RESTART ]] && ([[ $AG_RESTART = "FALSE" ]] || [[ $AG_RESTART = "false" ]]); then
     RESTART=false
 fi
+
 
 # REGISTER SYNDICATE
 echo "Registering Syndicate for an user ${USER}..."
@@ -185,6 +199,9 @@ if [ $RESTART = false ]; then
         exit 1
     fi
     syndicate $DEBUG_FLAG reload_gateway_cert ${AG_NAME}
+
+    /usr/bin/manipulate_ag_config.py sync_on_init true ${DRIVER_DIR}/config
+
     echo "y" | syndicate $DEBUG_FLAG update_gateway ${AG_NAME} driver=${DRIVER_DIR}
     if [ $? -ne 0 ]; then
         echo "Updating an AG (${AG_NAME})... Failed!"
@@ -200,7 +217,10 @@ else
         echo "Importing an AG (${AG_NAME})... Failed!"
         exit 1
     fi
-    syndicate $DEBUG_FLAG reload_gateway_cert ${AG_NAME}
+    syndicate $DEBUG_FLAG reload_gateway_cert ${AG_NAME} 
+
+    /usr/bin/manipulate_ag_config.py sync_on_init $SYNC_ON_RESTART ${DRIVER_DIR}/config
+
     echo "y" | syndicate $DEBUG_FLAG update_gateway ${AG_NAME} driver=${DRIVER_DIR}
     if [ $? -ne 0 ]; then
         echo "Updating an AG (${AG_NAME})... Failed!"
