@@ -17,4 +17,4 @@ AG_HOST_ARR=(`echo ${AG_HOST} | tr ':' ' '`)
 AG_HOSTNAME=${AG_HOST_ARR[0]}
 AG_PORT=${AG_HOST_ARR[1]}
 
-docker run -d -p ${AG_PORT}:${AG_PORT} -v "${PWD}/${dataset}":${GATEWAY_CONFIG_MOUNT_DIR} -e AG_DEBUG='TRUE' --name=${AG_NAME} ${DOCKER_IMAGE_NAME}
+docker run -d -p ${AG_PORT}:${AG_PORT} -v "${PWD}/${DATASET}":${GATEWAY_CONFIG_MOUNT_DIR} -e AG_DEBUG='TRUE' --name=${AG_NAME} ${DOCKER_IMAGE_NAME}
