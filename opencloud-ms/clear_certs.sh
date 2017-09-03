@@ -10,6 +10,9 @@ else
     exit 1
 fi
 
-rm -f ${DATASET}/${VOLUME}
-rm -f ${DATASET}/${AG_NAME}
-rm -f ${DATASET}/${ANONYMOUS_UG_NAME}
+CERTS_DIR=${DATASET}/certs
+
+
+rm -f ${CERTS_DIR}/${VOLUME}
+rm -f ${CERTS_DIR}/${AG_NAME}
+rm -f ${CERTS_DIR}/${ANONYMOUS_UG_NAME}
