@@ -1,7 +1,7 @@
 MS_HOST="http://syndicate-ms-datasets-prod.appspot.com:80"
 USER="cyverse@opencloud.us"
 VOLUME="pov"
-AG_NAME="ag_pov"
+AG_NAME="pov_ag"
 AG_HOST="demo2.opencloud.cs.arizona.edu:31525"
 ANONYMOUS_UG_NAME="pov_anonymous"
 SYNC_ON_RESTART=false
