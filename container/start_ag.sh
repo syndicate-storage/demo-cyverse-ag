@@ -206,6 +206,26 @@ if [ ${CREATE_ANONYMOUS_UG} = true ]; then
         fi
         sudo syndicate ${DEBUG_FLAG} export_gateway ${ANONYMOUS_UG_NAME} ${CERT_MOUNT_DIR}/
         echo "Creating an anonymous UG (${ANONYMOUS_UG_NAME})... Done!"
+    else
+        # IMPORT AN ANONYMOUS USER GATEWAY
+        echo "Importing an anonymous UG (${ANONYMOUS_UG_NAME})..."
+        echo "y" | syndicate ${DEBUG_FLAG} import_gateway ${CERT_MOUNT_DIR}/${ANONYMOUS_UG_NAME} force
+        if [ $? -ne 0 ]; then
+            echo "Importing an anonymous UG (${ANONYMOUS_UG_NAME})... Failed!"
+            exit 1
+        fi
+        syndicate ${DEBUG_FLAG} reload_gateway_cert ${ANONYMOUS_UG_NAME}
+
+        if [ ${UPDATE_ANONYMOUS_UG} = true ]; then
+            echo "y" | syndicate ${DEBUG_FLAG} update_gateway ${ANONYMOUS_UG_NAME} driver=${UG_DRIVER_DIR}
+            if [ $? -ne 0 ]; then
+                echo "Updating an anonymous UG (${ANONYMOUS_UG_NAME})... Failed!"
+                exit 1
+            fi
+        fi
+        sudo rm ${CERT_MOUNT_DIR}/${ANONYMOUS_UG_NAME}
+        sudo syndicate ${DEBUG_FLAG} export_gateway ${ANONYMOUS_UG_NAME} ${CERT_MOUNT_DIR}/
+        echo "Importing an anonymous UG (${ANONYMOUS_UG_NAME})... Done!"
     fi
 fi
 
@@ -243,7 +263,7 @@ else
         echo "Importing an AG (${AG_NAME})... Failed!"
         exit 1
     fi
-    syndicate ${DEBUG_FLAG} reload_gateway_cert ${AG_NAME} 
+    syndicate ${DEBUG_FLAG} reload_gateway_cert ${AG_NAME}
 
     /usr/bin/manipulate_ag_config.py sync_on_init ${SYNC_ON_RESTART} ${AG_DRIVER_DIR}/config
 
