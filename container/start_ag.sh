@@ -172,7 +172,7 @@ fi
 echo "Preparing ag driver code..."
 sudo rm -rf ${AG_DRIVER_DIR}
 mkdir ${AG_DRIVER_DIR}
-wget -O ${AG_DRIVER_DIR}/driver https://raw.githubusercontent.com/syndicate-storage/syndicate-fs-driver/master/src/sgfsdriver/ag_driver/driver
+wget -O ${AG_DRIVER_DIR}/driver https://raw.githubusercontent.com/syndicate-storage/syndicate-ug-lwc-driver/master/src/uglwcdriver/ug_driver/driver
 sudo cp ${AG_DRIVER_MOUNT_DIR}/config ${AG_DRIVER_DIR}/
 sudo cp ${AG_DRIVER_MOUNT_DIR}/secrets ${AG_DRIVER_DIR}/
 sudo chown -R syndicate:syndicate ${AG_DRIVER_DIR}
