@@ -1,7 +1,7 @@
 MS_HOST="http://syndicate-ms-datasets-prod.appspot.com:80"
 USER="cyverse@opencloud.us"
-VOLUME="ebisra"
-AG_NAME="ebisra_ag"
+VOLUME="ebi"
+AG_NAME="ebi_ag"
 AG_HOST="demo2.opencloud.cs.arizona.edu:31533"
-ANONYMOUS_UG_NAME="ebisra_anonymous"
+ANONYMOUS_UG_NAME="ebi_anonymous"
 SYNC_ON_RESTART=false
