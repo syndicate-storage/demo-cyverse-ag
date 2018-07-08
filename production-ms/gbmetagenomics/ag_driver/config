@@ -1,5 +1,5 @@
 {
-   "DATASET_DIR":       "/genbank",
+   "DATASET_DIR":       "/genomes/genbank/metagenomes",
    "MS_TTL": 86400,
    "AG_TTL": 86400,
    "DATA_CACHE_SIZE": 300,
