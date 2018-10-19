@@ -2,6 +2,6 @@ MS_HOST="http://syndicate-ms-datasets-prod.appspot.com:80"
 USER="cyverse@opencloud.us"
 VOLUME="1000genomes10g"
 AG_NAME="1000genomes10g_ag"
-AG_HOST="demo2.opencloud.cs.arizona.edu:31535"
+AG_HOST="ec2-3-8-33-222.eu-west-2.compute.amazonaws.com:31535"
 ANONYMOUS_UG_NAME="1000genomes10g_anonymous"
 SYNC_ON_RESTART=false
