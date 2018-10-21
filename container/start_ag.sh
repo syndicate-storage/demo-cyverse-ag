@@ -50,6 +50,10 @@ if [[ -n ${AG_RESTART} ]] && ([[ ${AG_RESTART} = "FALSE" ]] || [[ ${AG_RESTART} 
     RESTART=false
 fi
 
+BLOCK_SIZE=1048576
+if [[ -n ${SYNDICATE_BLOCK_SIZE} ]]; then
+    BLOCK_SIZE=${SYNDICATE_BLOCK_SIZE}
+fi
 
 # REGISTER SYNDICATE
 echo "Registering Syndicate for an user ${USER}..."
@@ -126,7 +130,7 @@ fi
 if [ ${RESTART} = false ]; then
     # CREATE A VOLUME
     echo "Creating a Volume (${VOLUME})..."
-    echo "y" | syndicate ${DEBUG_FLAG} create_volume name=${VOLUME} description=${VOLUME} blocksize=1048576 email=${USER} archive=True allow_anon=True private=False
+    echo "y" | syndicate ${DEBUG_FLAG} create_volume name=${VOLUME} description=${VOLUME} blocksize=${BLOCK_SIZE} email=${USER} archive=True allow_anon=True private=False
     if [ $? -ne 0 ]; then
         echo "Creating a Volume (${VOLUME})... Failed!"
         exit 1

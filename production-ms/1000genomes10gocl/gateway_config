@@ -4,4 +4,5 @@ VOLUME="1000genomes10gocl"
 AG_NAME="1000genomes10gocl_ag"
 AG_HOST="demo2.opencloud.cs.arizona.edu:31537"
 ANONYMOUS_UG_NAME="1000genomes10gocl_anonymous"
+SYNDICATE_BLOCK_SIZE=8388608
 SYNC_ON_RESTART=false
