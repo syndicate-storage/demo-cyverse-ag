@@ -1,29 +1,48 @@
 BUILD_FLAG ?= --squash
-IMAGE_NAME = syndicate-ag
-DOCKERFILE = ./Dockerfile
+IMAGE_NAME_DEVEL = syndicate-ag-dev
+IMAGE_NAME_RELEASE = syndicate-ag-rel
+DOCKERFILE_DEVEL = ./Dockerfile_devel
+DOCKERFILE_RELEASE = ./Dockerfile_release
 
-.PHONY: all clean build rebuild run push repush
+
+.PHONY: all clean_dev clean_rel clean build_dev build_rel build rebuild run_dev run_rel run push
 
 all: run
 
-clean:
-	@CONTAINERS="$(shell docker ps -a -q --filter=ancestor=$(IMAGE_NAME) | awk '{print $$1}')" ; if [ ! -z "$$CONTAINERS" ] ; then docker rm $$CONTAINERS ; fi
-	@docker inspect -f '{{.Id}}' syndicatestorage/$(IMAGE_NAME) 2> /dev/null ; if [ $$? -eq 0 ] ; then docker rmi -f syndicatestorage/$(IMAGE_NAME) ; fi
-	@docker inspect -f '{{.Id}}' $(IMAGE_NAME) 2> /dev/null ; if [ $$? -eq 0 ] ; then docker rmi -f $(IMAGE_NAME) ; fi
-	@DANGLINGS="$(shell docker images -f "dangling=true" -q)" ; if [ ! -z "$$DANGLINGS" ] ; then docker rmi $$DANGLINGS ; fi
+clean_dev:
+	@docker inspect -f '{{.Id}}' syndicatestorage/$(IMAGE_NAME_DEVEL) 2> /dev/null ; if [ $$? -eq 0 ] ; then docker rmi -f syndicatestorage/$(IMAGE_NAME_DEVEL) ; fi
+	@docker inspect -f '{{.Id}}' $(IMAGE_NAME_DEVEL) 2> /dev/null ; if [ $$? -eq 0 ] ; then docker rmi -f $(IMAGE_NAME_DEVEL) ; fi
 
-build:
-	@docker inspect -f '{{.Id}}' $(IMAGE_NAME) 2> /dev/null ; if [ $$? -ne 0 ] ; then docker build $(BUILD_FLAG) -f $(DOCKERFILE) -t $(IMAGE_NAME) . ; fi
-	@docker tag $(IMAGE_NAME) syndicatestorage/$(IMAGE_NAME)
+clean_rel:
+	@docker inspect -f '{{.Id}}' syndicatestorage/$(IMAGE_NAME_RELEASE) 2> /dev/null ; if [ $$? -eq 0 ] ; then docker rmi -f syndicatestorage/$(IMAGE_NAME_RELEASE) ; fi
+	@docker inspect -f '{{.Id}}' $(IMAGE_NAME_RELEASE) 2> /dev/null ; if [ $$? -eq 0 ] ; then docker rmi -f $(IMAGE_NAME_RELEASE) ; fi
+
+clean: clean_dev clean_rel
+
+build_dev:
+	docker build --no-cache $(BUILD_FLAG) -f $(DOCKERFILE_DEVEL) -t $(IMAGE_NAME_DEVEL) .
+	@docker tag $(IMAGE_NAME_DEVEL) syndicatestorage/$(IMAGE_NAME_DEVEL)
+
+build_rel:
+	docker build $(BUILD_FLAG) -f $(DOCKERFILE_RELEASE) -t $(IMAGE_NAME_RELEASE) .
+	@docker tag $(IMAGE_NAME_RELEASE) syndicatestorage/$(IMAGE_NAME_RELEASE)
+
+build: build_dev build_rel
 
 rebuild: clean build
-	
 
-run: build
-	@docker run -ti $(IMAGE_NAME)
+run_dev: build_dev
+	@docker run -ti $(IMAGE_NAME_DEVEL)
 
-push: build
-	@docker push syndicatestorage/$(IMAGE_NAME)
+run_rel: build_rel
+	@docker run -ti $(IMAGE_NAME_RELEASE)
 
-repush: clean push
-	
+run: run_rel
+
+push_dev: build_dev
+	@docker push syndicatestorage/$(IMAGE_NAME_DEVEL)
+
+push_rel: build_rel
+	@docker push syndicatestorage/$(IMAGE_NAME_RELEASE)
+
+push: push_dev push_rel

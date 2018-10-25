@@ -1,9 +1,18 @@
 #! /bin/bash
 
 DATASET=$1
+DEVEL=$2
 
-DOCKER_IMAGE_NAME=syndicatestorage/syndicate-ag
+DOCKER_IMAGE_NAME=syndicatestorage/syndicate-ag-rel
 GATEWAY_CONFIG_MOUNT_DIR=/opt/ag_config
+
+if [[ -n ${DEVEL} ]] && ([[ ${DEVEL} = "dev" ]] || [[ ${AG_DEBUG} = "DEV" ]]); then
+    echo "USE DEBUG IMAGE"
+    DOCKER_IMAGE_NAME=syndicatestorage/syndicate-ag-dev
+else
+    echo "USE RELEASE IMAGE"
+fi
+
 
 if [ -f "${DATASET}/gateway_config" ]; then
     echo "Loading gateway_config"
