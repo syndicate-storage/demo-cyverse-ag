@@ -164,7 +164,6 @@ USER root
 # need to ignore warnings (setuptools is too old)
 RUN python -W ignore setup.py install
 
-USER $USER
 WORKDIR $HOME
 
 
