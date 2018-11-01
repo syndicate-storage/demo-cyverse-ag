@@ -127,7 +127,7 @@ WORKDIR $HOME
 ##############################################
 # syndicate AG
 ##############################################
-RUN wget -O syndicate-ag.zip https://github.com/syndicate-storage/syndicate-ag/archive/master.zip && \
+RUN wget -O syndicate-ag.zip https://github.com/iychoi/syndicate-ag/archive/master.zip && \
     unzip syndicate-ag.zip && mv syndicate-ag-master syndicate-ag
 WORKDIR "syndicate-ag"
 
